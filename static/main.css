@@ -1,0 +1,15 @@
+.layui-container {
+    width: 100%;
+    height: 100%;
+}
+
+
+.layui-table-appcss .layui-table-header,
+.layui-table-appcss thead tr {
+    background-color: #F8FCF9;
+    color: #16BAAA
+}
+
+.layui-table-appcss>div {
+    margin-bottom: 6px;
+}

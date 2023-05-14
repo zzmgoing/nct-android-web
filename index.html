@@ -1,5 +1,78 @@
 <!DOCTYPE html>
+<html>
 
-<title>Minimal sql.js-httpvfs demo</title>
-<script src="./dist/bundle.js"></script>
-<div>Hello World!</div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NCT-ANDROID</title>
+    <link href="./layui/css/layui.css" rel="stylesheet">
+    <link href="./static/main.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="layui-container">
+
+        <ul class="layui-nav layui-bg-green" lay-bar="disabled">
+            <li class="layui-nav-item"><a href=""><strong>NCT Android</strong></a></li>
+        </ul>
+
+        <table class="layui-hide layui-table-appcss" id="l-table" lay-skin="nob"></table>
+        <script type="text/html" id="ID-table-app">
+            <ul>
+              <li><strong>ID:</strong> {{= d.build_id }} </li>
+              <li><strong>Name:</strong> {{= d.version_name }} </li>
+              <li><strong>Code:</strong> {{= d.version_code }} </li>
+              <li><strong>Time:</strong> {{= d.create_time }} </li>
+              <li><a class="layui-btn layui-btn-fluid" href=" {{= d.download_url }} " target="_blank"> Click Download</a></li>
+            </ul>
+        </script>
+        <script type="text/html" id="ID-table-qr">
+            <div id={{= d.build_id }} ></div>
+        </script>
+
+    </div>
+
+    <script src="./layui/layui.js"></script>
+    <script src="./layui/layui_exts/qrcode.js"></script>
+    <script>
+        layui.use(function () {
+            var $ = layui.$;
+            var layer = layui.layer;
+            var table = layui.table;
+
+            function makeQr(id, url) {
+                $(id).qrcode({
+                    render: "canvas",
+                    width: 200,
+                    height: 200,
+                    foreground: "#16baaa",
+                    background: "#ffffff",
+                    text: url
+                });
+            }
+
+            var inst = table.render({
+                elem: '#l-table',
+                url: './app.json',
+                height: 'full-35',
+                lineStyle: 'height: 220px;',
+                cols: [[
+                    { field: 'app', width: 200, title: 'Build', templet: '#ID-table-app' },
+                    { field: 'qr', width: 230, title: 'QrCode', templet: '#ID-table-qr' },
+                    { field: 'update_description', title: 'Update Description'},
+                ]],
+                done: function (res, curr, count) {
+                    console.log(res.data);
+                    for (var item of res.data) {
+                        makeQr('#' + item.build_id, item.download_url);
+                    }
+                },
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>
