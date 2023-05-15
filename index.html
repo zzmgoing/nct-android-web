@@ -24,7 +24,7 @@
               <li><strong>Name:</strong> {{= d.version_name }} </li>
               <li><strong>Code:</strong> {{= d.version_code }} </li>
               <li><strong>Time:</strong> {{= d.create_time }} </li>
-              <li><a class="layui-btn layui-btn-fluid" href=" {{= d.download_url }} " target="_blank"> Click Download</a></li>
+              <li><a class="layui-btn layui-btn-fluid" href="https://nct.zzming.cn{{= d.download_url }}" target="_blank"> Click Download</a></li>
             </ul>
         </script>
         <script type="text/html" id="ID-table-qr">
@@ -65,7 +65,7 @@
                 done: function (res, curr, count) {
                     console.log(res.data);
                     for (var item of res.data) {
-                        makeQr('#' + item.build_id, item.download_url);
+                        makeQr('#' + item.build_id, 'https://nct.zzming.cn' + item.download_url);
                     }
                 },
             });
